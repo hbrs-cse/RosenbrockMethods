@@ -31,10 +31,10 @@ These problems include systems of ordinary differential equations (ODEs) and in 
 In the second case we assume that the DAE system has the index one.
 When we can split (\ref{eq:dae}) into
 \begin{eqnarray}
-y' &=& f(t,y,z) \, , \label{eq:dae1} \\
-0 &=& g(t,y,z) \, , \label{eq:dae2} 
+y_1' &=& f_1(t,y_1,y_2) \, , \label{eq:dae1} \\
+0 &=& f_2(t,y_1,y_2) \, , \label{eq:dae2} 
 \end{eqnarray}
-the matrix $g_z = \frac{\partial g}{\partial z}$ must be non singular.
+the matrix $\frac{\partial f_2}{\partial y_2}$ must be non singular.
 We refer further to \cite{hairer} for the index definition.
 
 Rosenbrock-Wanner (ROW) methods for problems of type (\ref{eq:dae}) are defined by
@@ -62,7 +62,7 @@ These use an approximation of the Jacobian and can therefore be more efficient.
 While some W methods are known for ODEs, such methods are difficult to derive for DAEs. Jax \cite{jax2} showed that for DAEs of index one the number of order conditions 
 to be fulfilled is considerable. For a method of order 3, for example, 26 order conditions must be fulfilled. 
 %Jax was able to determine a method of order $p=3$ with $s=7$ stages. 
-The derivatives $g_z$ of the algebraic equations contained in (\ref{eq:dae2}) must nevertheless be exact, or at least keep to the error order 
+The derivatives $\frac{\partial f_2}{\partial y_2}$ of the algebraic equations contained in (\ref{eq:dae2}) must nevertheless be exact, or at least keep to the error order 
 $\mathcal{O}(h)$. 
 %In order to limit the number of stages, we therefore only consider Rosenbrock-W methods for DAEs up to the order $p=2$.
 For this reason, the most common W methods currently have a maximum order of two for DAEs.
@@ -121,7 +121,7 @@ method in brackets), W = order of W method for ODEs / DAEs, A = A stable, $R(\in
 Only the methods are specified which have a step size control. This is done using an embedded scheme with its own weights $\hat b_i$, such that 
 \[ \hat y_1 = y_0 + \sum_{i=1}^{s} \hat b_i k_i\]
 is an approximation of the solution with order $\hat p$.
-The orders of the embedded method are shown in brackets in Table \ref{tab:overview}.
+The orders of the embedded methods are shown in brackets in Table \ref{tab:overview}.
 
 The stage number $s$ is a measure of the numerical effort per time step. For some methods, however, the number of function evaluations can also be less than $s$. 
 This applies, for example, to the first five methods listed and is achieved by a clever choice of the coefficients $\alpha_{ij}$.
@@ -157,7 +157,7 @@ The numerical order obtained is shown in Table \ref{tab:overview}.
 Although a variety of methods exist, there are applications that are not solved satisfactorily. This applies in particular to the continuous output of the 
 solution for certain DAEs, which is discussed in Section \ref{sec:cont}.
 This was the reason to derive new low order methods \verb|Rodas23W|, \verb|Rodas3P| (Section \ref{sec:construct}) and 
-to implement two new variants of \verb|Rodas5P| (Section \ref{sec:rodas5pe}).
+to implement two new variants \verb|Rodas5Pr|, \verb|Rodas5Pe| of \verb|Rodas5P| (Section \ref{sec:rodas5pe}).
 Finally, some benchmarks and applications are presented in Section \ref{sec:bench}.
 
 \section{Continuous output for DAE problems} \label{sec:cont}
@@ -165,7 +165,7 @@ Finally, some benchmarks and applications are presented in Section \ref{sec:benc
 The first problem was discussed as an issue in the repository of\\ \verb|OrdinaryDiffEq|.
 We consider the pure algebraic equation
 \begin{equation} 0 = y_1 - \sin(20 \pi t) \; , \quad y_1(0)=0 \, .\label{eq:prob1} \end{equation}
-Figures \ref{fig:dynamic} shows the numerical solution obtained with methods \verb|Rosenbrock23| and \verb|Rodas4|.
+Figure \ref{fig:dynamic} shows the numerical solution obtained with methods \verb|Rosenbrock23| and \verb|Rodas4|.
 Here we see the following effects: With both methods, the time step control does not work, only seven time steps are required. 
 However, the failure of the step size control has different causes. 
 
@@ -209,7 +209,7 @@ shows, that this measure dose not solve the inherent problem with \verb|Rosenbro
  \caption{Stability regions of \tt Rosenbrock23\rm. Black method of order two, blue method of order three.}\label{fig:stability}
 \end{figure}
 
-Next, we tested all of the available Rosenbrock and Rosenbrock-W methods in \verb|DifferentialEquations.jl| on problem (\ref{eq:prob1a}).
+Next, we tested all of the available Rosenbrock and Rosenbrock-W methods form Table \ref{tab:overview} on problem (\ref{eq:prob1a}).
 All variants of \verb|Rodas4|, like \verb|Rodas42|, \verb|Rodas4P|, \verb|Rodas4P2|, \verb|Rodas5|, 
 \verb|Rodas5P|, \verb|Rodas3| showed the same behaviour as illustrated in Figure \ref{fig:dynamic}.
 Note, that \verb|Rodas3| has only a Hermite interpolation, which is not suited for DAEs.\\
@@ -219,7 +219,7 @@ unstable and not able to solve the problem.
 
 All other methods are not equipped with their own interpolation. Since the mass matrix $M$ is not a diagonal matrix, 
 it is not possible to distinguish between differential and algebraic equations and interpolation cannot be applied.
-The following methods are only successful if the option \verb|dense=false| is used:
+If the option \verb|dense=false| is used the following methods are successful:
 \verb|scholz4_7|, \verb|ROS2S|, \verb|ROS3|, \verb|ROS3P|,  \verb|ROS3PR|, \verb|ROS3PRL|, \verb|ROS3PRL2|, \verb|ROS34PW1a|, \verb|ROS34PW1b|, \verb|ROS34PW2|, 
 \verb|ROS34PW3| and \verb|ROS34PRw|. 
 
@@ -259,7 +259,7 @@ scheme is interpreted as an embedded method.
 \verb|Rodas23W| is of order $p=2$ with W property for DAEs, \verb|Rodas3P| is of order $p=3$ and is analogous 
 to \verb|Rodas4P| particularly 
 suitable for the Prothero-Robinson equation and semi-discretized parabolic problems.
-Both methods have a dense-output formula of the same order. This makes it possible to check the errors of the 
+Both methods have a dense-output formula of of order three and two respectively. This makes it possible to check the errors of the 
 interpolation and the problems that occurred in equation (\ref{eq:prob1}) can be avoided.
 
 A method of order $p=3$ for index one DAEs of type (\ref{eq:dae}) must fulfill conditions No.1, 2, 3, 4, 5 of Table \ref{tab:conditions}, see \cite{hairer,roche}.
@@ -269,7 +269,7 @@ When collecting coefficients $\beta_{ij}$ in matrix $B$, coefficients $w_{ij}$ a
 
 If an inexact Jacobian $f_y$ or $f_t$ is to be used in equation (\ref{eq_row1}), additionally the W conditions must be considered.
 Up to order $p=2$ these are conditions No.6, 7, 8 of Table  \ref{tab:conditions}.
-No.7 and No.8 only apply, when DAEs are solved. Note, that nevertheless derivatives $g_z$ of the algebraic equations (\ref{eq:dae2}) with respect to the 
+No.7 and No.8 only apply, when DAEs are solved. Note, that nevertheless derivatives $\frac{\partial f_2}{\partial y_2}$ of the algebraic equations (\ref{eq:dae2}) with respect to the 
 algebraic variables should be exact
 or at least of error order $\mathcal{O}(h)$, see \cite{jax2}.
 Condition No.9 guarantees convergence order $p=2$ for certain DAEs of index two, see \cite{lubich}.
@@ -335,12 +335,12 @@ continuous output&x&x& & &x&x& &x& &  \\
 
 The coefficients are shown in Table \ref{tab:coeff}.
 As we can see from the $\alpha$ coefficients, only three evaluations of the right-hand side of the system (\ref{eq:dae}) are required.
-oth methods are A stable, their stability regions are shown in Figure \ref{fig:stabrodas3p}.
-If we need the maximum possible order, we use \verb|Rodas3P| and \verb|Rodas23W| as embedded methods for stepsize control. 
+Both methods are A stable, their stability regions are shown in Figure \ref{fig:stabrodas3p}.
+If we need the maximum possible order, we use \verb|Rodas3P| and apply \verb|Rodas23W| as embedded method for step size control. 
 If we want to take advantage of the W properties, we can also proceed in exactly the opposite way.
 
 \begin{table}
-\tbl{Coefficients of {\tt Rodas23W}( $\hat{}$ ) and {\tt Rodas3P}.}{
+\tbl{Coefficients of {\tt Rodas3P} and {\tt Rodas23W}( $\hat{}$ ).}{
 \begin{minipage}{25pc}
 \begin{eqnarray*}
 \alpha &=& \begin{pmatrix} 
@@ -365,11 +365,11 @@ If we want to take advantage of the W properties, we can also proceed in exactly
  \label{tab:coeff}
 \end{table}
 
-Because the interpolation formulas of both methods also have the order $p=3$ and $p=2$ respectively, we can check their errors, too. 
+Because the interpolation formulas of both methods also have the order $p=3$ and $p=2$ respectively, we can check their errors. 
 The difference $y(t_0+ \tau \, h) - \hat y(t_0 + \tau \, h)$ leads to a third order polynomial in $\tau$. Thus we can compute the maximum difference 
 \[err_i = \max_{\tau \in [0,1]}|y_i(t_0+ \tau \, h) - \hat y_i(t_0 + \tau \, h)|\]
- for each component $y_i$ of the interpolated solution. Similar to the error control after each timestep we require 
- $err_i \leq abstol + reltol \,|y_i|$ and reduce the stepsize when this condition is violated.
+ for each component $y_i$ of the interpolated solution. Similar to the error control after each timestep, we require 
+ $err_i \leq abstol + reltol \,|y_i|$ and reduce the step size when this condition is violated.
  
 \begin{figure}
  \centering
@@ -457,7 +457,7 @@ Table \ref{tab:overview} are confirmed.
 \begin{figure}
  \centering
  \includegraphics[width=0.47\textwidth]{Abb4.pdf}
- \caption{Work-precision diagram for problem (\ref{eq:w1},\ref{eq:w2},\ref{eq:w3}).}\label{fig:benchW}
+ \caption{Work-precision diagram for problem (\ref{eq:w1},\ref{eq:w2},\ref{eq:w3}) with inexact Jacobian.}\label{fig:benchW}
 \end{figure}
 
 Finally, all 16 methods from Table \ref{tab:overview}, which have an order greater than two for parabolic problems, were applied to the  
@@ -491,6 +491,7 @@ Figure \ref{fig:energy1} shows that the dynamics of the input data is not fully 
 %It turns out that the input data of the model is not satisfactorily resolved by the simulation. 
 The reason is the same as discussed in the example of equation (\ref{eq:prob1}).
 The problem also occurs here because the remaining components of the network have a much smoother behavior than the input data.
+Of course, the behaviour also depends on the selected relative tolerance. When the tolerance is reduced, the curves continue to approach each other.
 
 \begin{figure}
  \centering
@@ -502,7 +503,7 @@ Table \ref{tab:battery} shows the solver statistics for the various methods of t
 can only be observed when using the new methods \verb|Rodas23W|, \verb|Rodas3P|, \verb|Rodas5Pe|. 
 This means, that at least around 10000 time steps are required.
 All other methods show the same behavior as \verb|Rodas5P|, albeit to a lesser extent. For the residual control of \verb|Rodas5Pr| to be effective, 
-the relative tolerance \verb|reltol| must be reduced slightly. For all results shown in Figure \ref{fig:energy1} and Table \ref{tab:battery}, \verb|abstol=reltol=1.0e-4| was chosen.
+the relative tolerance \verb|reltol| must be reduced slightly. For all results shown in Figure \ref{fig:energy1} and Table \ref{tab:battery}, \verb|abstol=reltol=1.0e-4| was chosen. 
 
 \begin{table} \label{tab:battery}
 \tbl{Solver statistics for the simplified energy model.}{
@@ -582,7 +583,7 @@ University of Geneva, Switzerland (1993)
 \bibitem{oro} A.~Ostermann, M.~Roche, Rosenbrock methods for partial differential equations and fractional orders of convergence,
 SIAM J. Numer. Anal. 30, 1084-1098 (1993)
 
-\bibitem{julia} C.~Rackauckas, Q.~Nie, Differentialequations.jl--a performant and feature-rich ecosystem for solving differential equations in julia,
+\bibitem{julia} C.~Rackauckas, Q.~Nie, DifferentialEquations.jl--a performant and feature-rich ecosystem for solving differential equations in julia,
 Journal of Open Research Software, 5(1), p.15, Ubiquity Press (2017)
 
 \bibitem{ranga} J.~Rang, L.~Angermann,
