@@ -141,7 +141,7 @@ Ostermann \cite{ostermann} investigated the continuous extensions of Rosenbrock-
 If the matrix $M$ in (\ref{eq:dae}) is a diagonal matrix, a distinction can be made between differential and algebraic equations. 
 In this case, all other methods use Hermite interpolation for the differential equations and linear interpolation for the algebraic equations.
 
-W methods for ODEs were derived in particular by Rang (\verb|ROS34P| family), while W methods for DAEs are only available up to order 2. 
+W methods for ODEs were derived in particular by Rang (\verb|ROS34PW| family), while W methods for DAEs are only available up to order 2. 
 Currently, however, the W property is not utilized in the implementation, e.g. to reduce the number of evaluations of the Jacobian matrix.
 However, it can be assumed that these methods are more suitable if the Jacobian matrix is approximated for example by finite differences and is therefore not exact.
 
@@ -176,7 +176,7 @@ This applies regardless of the selected error tolerance.
 The large step sizes make the third-order interpolation, which is integrated in the method, extremely inaccurate.
 Of course, this can be avoided when a suitable bound for the maximum time step width $h_{max}$ is used. 
 This example was the reason to issue a warning for the interpolation results when Rosenbrock methods are applied to pure algebraic equations.
-Of course, this can easily be circumvented by adding a second equation $y_2'=0$. 
+Of course, this warning can easily be circumvented by adding a second equation $y_2'=0$. 
 Therefore, it would be desirable to check not only the error of the solution at the discrete time steps but also the error of the interpolation.
 Another possibility would be the modification of the embedded scheme so that it is no longer stiffly accurate.
 
@@ -217,9 +217,9 @@ Note, that \verb|Rodas3| has only a Hermite interpolation, which is not suited f
 \verb|Rosenbrock32| is the same method as \verb|Rosenbrock23|, but the 3rd order scheme is used for the solution, here. Therefore, it is 
 unstable and not able to solve the problem.
 
-All other methods are not equipped with their own interpolation. Since the mass matrix $M$ is not a diagonal matrix, 
+All other methods are not equipped with their own interpolation for DAEs. Since the mass matrix $M$ is not a diagonal matrix, 
 it is not possible to distinguish between differential and algebraic equations and interpolation cannot be applied.
-If the option \verb|dense=false| is used the following methods are successful:
+Only if the option \verb|dense=false| is used the following methods are successful:
 \verb|scholz4_7|, \verb|ROS2S|, \verb|ROS3|, \verb|ROS3P|,  \verb|ROS3PR|, \verb|ROS3PRL|, \verb|ROS3PRL2|, \verb|ROS34PW1a|, \verb|ROS34PW1b|, \verb|ROS34PW2|, 
 \verb|ROS34PW3| and \verb|ROS34PRw|. 
 
@@ -241,7 +241,7 @@ We can see that almost all Rosenbrock methods used have a similar behavior. Only
 The reason for the similarities is the linear interpolation which is implemented for the algebraic variables.
 On the other hand, we see that Rodas5P works much more efficiently, but achieves a considerably lower accuracy. 
 The reason for the lower accuracy is again due to the stiffly accurate property of the \verb|Rodas| methods, which all behave similarly. 
-Due to the almost exact solution of the algebraic equation, too large time steps are again used and the interpolation is inaccurate.
+Due to the almost exact solution of the algebraic equation, too large time steps are again used and the interpolation loses accuracy.
 A comparison of the required time steps illustrates the characteristics of the different methods: 
 With a tolerance of \verb|abstol=reltol=1.0e-8|, for example, \verb|ROS34PRw| requires 83070 time steps, whereas \verb|Rodas5P| requires only 52.
 With \verb|Rosenbrock23| the solution was not possible within a reasonable computing time.
@@ -401,7 +401,7 @@ This new method is called \verb|Rodas5Pe|.
 
 First, we consider problem (\ref{eq:prob1a}). Figure \ref{fig:bench1a} shows the work-precision diagram for the new methods. Again, the $L_2$ error is shown, which is strongly 
 influenced by the interpolation. Here \verb|Rodas23W| delivers even better results than \verb|Rodas3P|. This is because \verb|Rodas23W| also fulfils the order condition No.5 
-from Table \ref{tab:conditions}. \verb|Rodas5Pe| and \verb|Rodas5Pr| provide very similar results. The four new methods are the only ones that produce meaningful results for 
+from Table \ref{tab:conditions} and therefore achieves the same order for this problem as \verb|Rodas3P|. Methods \verb|Rodas5Pe| and \verb|Rodas5Pr| provide very similar results. The four new schemes are the only ones that produce meaningful results for 
 this problem with respect to the $L_2$ error.
 
 \begin{figure}
@@ -429,9 +429,10 @@ Figure \ref{fig:bench3a} shows the results for a simple linear stiff ODE system
 %\begin{pmatrix} 0\\0\\0 \end{pmatrix}  . 
 \label{eq:stiffode}
 \end{equation}
-with initial conditions $y_1(0)=y_2(0)=y_3(0)=0$.
+with initial conditions $y_1(0)=y_2(0)=y_3(0)=1$.
 Shown here is the $l_2$ error for $t \in [0,10]$, which does not include any interpolation results. The different orders of the Rodas methods are easy to distinguish and correspond to expectations. 
 Why \verb|ROS3P|, \verb|ROS3PR|, \verb|ROS34PW1a| and \verb|ROS34PW1b| do not provide plausible results could not be clarified.
+In addition to the old methods \verb|GRK4T|, \verb|GRK4A|, \verb|Veld4|, \verb|Velds4|, the Rodas-type methods of order 4 and 5 show the best efficiency.
 
 \begin{figure}
  \centering
@@ -452,7 +453,7 @@ The Jacobian matrix was evaluated at time $t=0$ and kept constant. It should be 
 $y_3$ is thus exact for all $t$.
 The methods \verb|Rosenbrock23|, \verb|Rosenbrock32|, \verb|ROS2S|, \verb|ROS34PW1a|, \verb|ROS34PW1b| could not solve the problem in a reasonable time. 
 The results of the other methods are shown in Figure \ref{fig:benchW}. Here, the convergence properties for W methods applied to DAEs given in 
-Table \ref{tab:overview} are confirmed.
+Table \ref{tab:overview} are confirmed. Beside \verb|ROS34PRw| the new methods \verb|Rodas23W|, \verb|Rodas5Pe|, \verb|Rodas5Pr| achieve the highest accuracies.
 
 \begin{figure}
  \centering
@@ -524,8 +525,9 @@ Rodas5Pe & 112542 &9450& 2255\\
 \hline
 \end{tabular}}
 \begin{tabnote}
-$nsucc$ = number of successful time steps, 
- $nfail$ = number of rejected steps.
+\verb|nfcn| = number of function evaluations,
+\verb|nsucc| = number of successful time steps, 
+ \verb|nfail| = number of rejected steps.
  \end{tabnote}
 \end{table}
 
@@ -534,6 +536,11 @@ These can be used when time-dependent algebraic equations cannot be solved with 
 \verb|Rodas5Pe| uses an alternative embedded method that is not stiffly accurate, \verb|Rodas5Pr| is equipped with an error control for the residual of the interpolation. 
 Alternatively, lower order methods can be applied, which are equipped with an error control by the second and third order interpolation schemes.
 \verb|Rodas3P| has similar properties to \verb|Rodas4P|, \verb|Rodas5P| and \verb|Rodas23W| is preferable due to its W property if the Jacobian matrix is not exactly known.
+It may be seen as an alternative to the standard \verb|Rosenbrock23| solver for lower accuracy requirements.
+
+\input{bib.tex}
+
+\end{document}
 
 %\newpage
 \begin{thebibliography}{}
