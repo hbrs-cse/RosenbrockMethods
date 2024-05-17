@@ -4,7 +4,7 @@ default(titlefont = 6, legendfontsize = 4, guidefont = 5, tickfont = 5, markersi
 
 abstols = 1.0 ./ 10.0 .^ (2:10);  reltols = 1.0 ./ 10.0 .^ (2:10) 
 
-tspan = [0.0, 10.0]; u0 = [0.0, 1.0, 0.0]
+tspan = [0.0, 10.0]; u0 = [1.0, 1.0, 1.0]
 J = [-0.8 12.5 0; -12.5 -0.8 0; 0 0 -100]
 
 function f(du,u,J,t)
