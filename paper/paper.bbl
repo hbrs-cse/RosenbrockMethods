@@ -1,0 +1,204 @@
+\begin{thebibliography}{10}
+
+\bibitem{flexhyx}
+M.~Bareev-Rudy, S.~Meiswinkel, M.~Pfennig, S.~Schedler, B.~Schiffer,
+  G.~Steinebach, and T.~Clees.
+{Analysis of PtGtX systems with metal hydride storage based on coupled
+  electrochemical and thermodynamic simulation}.
+{\em Energy Conversion and Management}, 2024.
+submitted.
+
+\bibitem{hairer}
+E.~Hairer and G.~Wanner.
+{\em Solving Ordinary Differential Equations II, Stiff and differential
+  algebraic problems}.
+Springer-Verlag, Berlin Heidelberg, 2nd edition, 1996.
+
+\bibitem{rang12}
+A.~W. Hamkar, S.~Hartmann, and J.~Rang.
+{A stiffly accurate Rosenbrock-type method of order 2}.
+{\em Appl. Num. Math.}, 62(12):1837--1848, 2012.
+
+\bibitem{jax2}
+T.~Jax.
+{\em A rooted-tree based derivation of ROW-type methods with arbitrary jacobian
+  entries for solving index-one DAEs}.
+PhD thesis, University Wuppertal, 2019.
+
+\bibitem{jaxsteinebach}
+T.~Jax and G.~Steinebach.
+Generalized row-type methods for simulating water supply networks.
+In P.~Quintela, P.~Barral, D.~Gómez, F.J. Pena, J.~Rodríguez, P.~Salgado, and
+  M.~E. Vázquez-Méndez, editors, {\em Progress in Industrial Mathematics at
+  ECMI 19th European Conference on Mathematics for Industry}, pages 447--454,
+  Cham, 2017. Springer.
+
+\bibitem{kaps}
+P.~Kaps and P.~Rentrop.
+{Generalized Runge-Kutta methods of order four with stepsize control for stiff
+  ordinary differential equations}.
+{\em Numerische Mathematik}, 33:55--68, 1979.
+
+\bibitem{lang2}
+J.~Lang and J.~G. Verwer.
+{ROS3P---an accurate third-order Rosenbrock solver designed for parabolic
+  problems}.
+{\em J. BIT Numerical Mathematics}, 41:731--738, 2001.
+
+\bibitem{lang}
+Jens Lang.
+{Rosenbrock-Wanner methods: Construction and mission}.
+In Tim Jax, Andreas Bartel, Matthias Ehrhardt, Michael G{\"u}nther, and Gerd
+  Steinebach, editors, {\em Rosenbrock---Wanner--Type Methods: Theory and
+  Applications}, pages 1--17, Cham, 2021. Springer International Publishing.
+
+\bibitem{luos}
+C.~Lubich and A.~Ostermann.
+Linearly implicit time discretization of non-linear parabolic equations.
+{\em IMA Journal of Numerical Analysis}, 15(4):555--583, 1995.
+
+\bibitem{lubich}
+C.~Lubich and M.~Roche.
+Rosenbrock methods for differential-algebraic systems with solution-dependent
+  singular matrix multiplying the derivative.
+{\em Computing}, 43:325--342, 1990.
+
+\bibitem{rodas5}
+G.~Di Marzo.
+{Rodas5(4) -- Méthodes de Rosenbrock d'ordre 5(4) adaptées aux problemes
+  différentiels-algébriques}.
+Master's thesis, Faculty of Science, University of Geneva, Switzerland, 1993.
+
+\bibitem{ostermann}
+A.~Ostermann.
+{Continuous extensions of Rosenbrock-type methods}.
+{\em Computing}, 44:59--68, 1990.
+
+\bibitem{oro}
+A.~Ostermann and M.~Roche.
+Rosenbrock methods for partial differential equations and fractional orders of
+  convergence.
+{\em SIAM J. Numer. Anal.}, 30:1084--1098, 1993.
+
+\bibitem{julia}
+C.~Rackauckas and Q.~Nie.
+Differentialequations.jl--a performant and feature-rich ecosystem for solving
+  differential equations in julia.
+{\em Journal of Open Research Software}, 5(1):15, 2017.
+
+\bibitem{rang12a}
+J.~Rang.
+{An analysis of the Prothero--Robinson example for constructing new DIRK and
+  ROW methods}.
+Technical report, TU Braunschweig, 2012.
+Informatik-Bericht 2012-03.
+
+\bibitem{rang1}
+J.~Rang.
+{The Prothero and Robinson example: Convergence studies for Runge-Kutta and
+  Rosenbrock-Wanner methods}.
+Technical report, TUI Braunschweig, 2014.
+Informatikbericht 2014-05.
+
+\bibitem{rang15}
+J.~Rang.
+{Improved traditional Rosenbrock-Wanner methods for stiff ODEs and DAEs}.
+{\em Journal of Computational and Applied Mathematics}, 286:128--144, 2015.
+
+\bibitem{rang2}
+J.~Rang.
+{The Prothero and Robinson example: Convergence studies for Runge-Kutta and
+  Rosenbrock-Wanner methods}.
+{\em Applied Numerical Mathematics}, 108:37--56, 2016.
+
+\bibitem{ranga}
+J.~Rang and L.~Angermann.
+{New Rosenbrock W-methods of order 3 for partial differential algebraic
+  equations of index 1}.
+{\em BIT}, 45:761--787, 2005.
+
+\bibitem{rentropsteinebach}
+P.~Rentrop and G.~Steinebach.
+{Model and numerical techniques for the alarm system of river Rhine}.
+{\em Surveys Math. Industry}, 6(4):245--265, 1997.
+
+\bibitem{roche}
+M.~Roche.
+Rosenbrock methods for differential algebraic equations.
+{\em Numerische Mathematik}, 52:45--63, 1988.
+
+\bibitem{rodas3}
+A.~Sandu, J.~G. Verwer, M.~Van Loon, G.~R. Carmichael, F.~A. Potra, D.~Dabdub,
+  and J.~H. Seinfeld.
+{Benchmarking stiff ode solvers for atmospheric chemistry problems-I. implicit
+  vs explicit}.
+{\em Atmospheric Environment}, 31(19):3151--3166, 1997.
+
+\bibitem{scholz}
+S.~Scholz.
+{Order barriers for the B-Convergence of ROW Methods}.
+{\em Computing}, 41:219--235, 1989.
+
+\bibitem{shamp}
+L.~F. Shampine.
+{Implementation of Rosenbrock methods}.
+{\em ACM Transactions on Mathematical Software}, 8(2):93--113, 1982.
+
+\bibitem{shampine}
+L.~F. Shampine and M.~W. Reichelt.
+{The MATLAB ODE suite}.
+{\em SIAM Journal on Scientific Computing}, 18(1):1--22, 1997.
+
+\bibitem{steihaug}
+T.~Steihaug and A.~Wolfbrandt.
+An attempt to avoid exact jacobian and nonlinear equations in the numerical
+  solution of stiff differential equations.
+{\em Math. Comp.}, 33:521--534, 1979.
+
+\bibitem{rodas4p}
+G.~Steinebach.
+{Order-reduction of ROW-methods for DAEs and method of lines applications}.
+Technical report, TH Darmstadt, 1995.
+Preprint-Nr. 1741, FB Mathematik.
+
+\bibitem{ecmi}
+G.~Steinebach.
+From river rhine alarm model to water supply network simulation by the method
+  of lines.
+In G.~Russo, V.~Capasso, G.~Nicosia, and V.~Romano, editors, {\em Progress in
+  Industrial Mathematics at ECMI 2014}, pages 783--792, Cham, 2016. Springer
+  International Publishing.
+
+\bibitem{rodas4p2}
+G.~Steinebach.
+{Improvement of Rosenbrock-Wanner method RODASP}.
+In T.~Reis, S.~Grundel, and S.~Schöps, editors, {\em Progress in
+  Differential-Algebraic Equations II. 9th Workshop on Descriptor Systems,
+  March 17–20, 2019, Paderborn, Germany}, pages 165 -- 184, Cham, 2020.
+  Springer.
+
+\bibitem{rodas5p}
+G.~Steinebach.
+{Construction of Rosenbrock-Wanner method Rodas5P and numerical benchmarks
+  within the Julia Differential Equations package}.
+{\em Bit Numer Math}, 63:27, 2023.
+
+\bibitem{dreistadtsteinebach}
+G.~Steinebach and D.~M. Dreistadt.
+{Water and hydrogen flow in networks: Modelling and numerical solution by ROW
+  methods}.
+In Tim Jax, Andreas Bartel, Matthias Ehrhardt, Michael G{\"u}nther, and Gerd
+  Steinebach, editors, {\em Rosenbrock---Wanner--Type Methods: Theory and
+  Applications}, pages 19--47, Cham, 2021. Springer International Publishing.
+
+\bibitem{strehmel}
+K.~Strehmel, R.~Weiner, and H.~Podhaisky.
+{\em Numerik gewöhnlicher Differentialgleichngen}.
+Springer Spektrum, 2012.
+
+\bibitem{veld}
+M.~V. van Veldhuizen.
+{D-stability and Kaps-Rentrop-methods}.
+{\em Computing}, 32:229--237, 1984.
+
+\end{thebibliography}
